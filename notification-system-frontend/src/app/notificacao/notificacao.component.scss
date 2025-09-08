@@ -1,0 +1,21 @@
+.message-form {
+  max-width: 1200px;
+  margin: 20px auto;
+}
+
+.message-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 8px;
+}
+
+.message-input {
+  flex: 1 1 auto;
+}
+
+.line{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

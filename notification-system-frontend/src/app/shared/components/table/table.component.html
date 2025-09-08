@@ -1,0 +1,36 @@
+<div class="container">
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+
+    <ng-container matColumnDef="demo-id">
+      <th mat-header-cell *matHeaderCellDef> Id </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="demo-message">
+      <th mat-header-cell *matHeaderCellDef> Message </th>
+      <td mat-cell *matCellDef="let element"> {{element.message}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="demo-status">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let element" [ngClass]="(element.status | statusStyle).cls">
+        <mat-icon inline>{{ (element.status | statusStyle).icon }}</mat-icon>
+        {{ (element.status | statusStyle).label }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="demo-timestamp">
+      <th mat-header-cell *matHeaderCellDef> Timestamp </th>
+      <td mat-cell *matCellDef="let element"> {{ element.timestamp | date:'dd/MM/yyyy HH:mm' }} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  @if(dataSource.length === 0){
+    <p class="no-data">Nenhum mensagem cadastrada</p>
+  }
+
+</div>

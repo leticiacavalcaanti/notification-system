@@ -1,0 +1,31 @@
+<mat-toolbar>
+  <span>Notification System</span>
+</mat-toolbar>
+
+
+
+
+<form class="message-form" [formGroup]="form" (ngSubmit)="onSend()">
+  <div class="message-row">
+    <mat-form-field class="message-input">
+      <mat-label>Messagem</mat-label>
+      <div class="line">
+        <input matInput formControlName="message" maxlength="256" placeholder="Mensagem aqui...">
+
+        <button mat-fab type="submit" color="primary" class="send-btn" aria-label="Enviar mensagem"
+          [disabled]="messageControl.invalid">
+          <mat-icon>send</mat-icon>
+        </button>
+      </div>
+      <mat-hint align="start"><strong>Insira sua mensagem para processamento</strong> </mat-hint>
+      <mat-hint align="end">{{messageControl.value?.length || 0}} / 256</mat-hint>
+      <mat-error *ngIf="messageControl.touched && messageControl.invalid">
+        A mensagem deve ter no mínimo 1 caractere.
+      </mat-error>
+    </mat-form-field>
+
+  </div>
+</form>
+
+
+<app-table [dataSource]="data" />
