@@ -1,82 +1,68 @@
-# Notification System
 
-Este projeto é composto por dois diretórios principais:
+# Notification System - Rodando Local
 
-- `notification-system-backend`: Backend em NestJS
-- `notification-system-frontend`: Frontend em Angular
+Este projeto possui dois diretórios principais:
+- `notification-system-backend` (NestJS)
+- `notification-system-frontend` (Angular)
 
 ## Pré-requisitos
-
-- Node.js (versão recomendada: 18+)
+- Node.js 18+
 - npm
-- Docker (para rodar RabbitMQ localmente)
+- Docker (para RabbitMQ)
 
 ---
 
-## Como rodar o Backend (NestJS)
+## 1. Subindo o RabbitMQ com Docker
 
-1. Acesse o diretório do backend:
-	```powershell
-	cd notification-system-backend
-	```
-
-2. Instale as dependências:
-	```powershell
-	npm install
-	```
-
-3. Configure o arquivo `.env` com as variáveis abaixo:
-	```env
-	AMQP_URL=amqp://usuario:senha@localhost:5672
-	SEU_NOME=seunome
-	PORT=3000
-	```
-	- `AMQP_URL`: URL de conexão com o RabbitMQ. Se usar Docker local, utilize `amqp://guest:guest@localhost:5672`.
-	- `SEU_NOME`: Seu nome ou identificador.
-	- `PORT`: Porta do backend (padrão 3000).
-
-4. (Opcional) Para rodar RabbitMQ via Docker:
-	```powershell
-	docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:management
-	```
-	- A interface de gerenciamento estará disponível em `http://localhost:15672` (usuário/senha: guest/guest).
-
-5. Inicie o servidor:
-	```powershell
-	npm run start:dev
-	```
-
-6. O backend estará disponível em `http://localhost:3000`.
+Abra o terminal e execute:
+```powershell
+docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:management
+```
+Acesse a interface de gerenciamento: http://localhost:15672 (usuário/senha: guest/guest)
 
 ---
 
-## Como rodar o Frontend (Angular)
+## 2. Configurando o Backend (NestJS)
 
-1. Acesse o diretório do frontend:
-	```powershell
-	cd notification-system-frontend
-	```
+```powershell
+cd notification-system-backend
+npm install
+```
 
-2. Instale as dependências:
-	```powershell
-	npm install
-	```
+Crie o arquivo `.env` na pasta do backend com:
+```env
+AMQP_URL=amqp://guest:guest@localhost:5672
+SEU_NOME=seunome
+PORT=3000
+```
 
-3. Inicie o servidor de desenvolvimento:
-	```powershell
-	npm start
-	```
-	ou
-	```powershell
-	ng serve
-	```
-
-4. O frontend estará disponível em `http://localhost:4200`.
+Inicie o backend:
+```powershell
+npm run start:dev
+```
+O backend estará em: http://localhost:3000
 
 ---
 
-## Observações
+## 3. Configurando o Frontend (Angular)
 
-- Certifique-se de que o backend esteja rodando antes de acessar o frontend.
-- Para integração com RabbitMQ, é necessário que o serviço esteja ativo e configurado conforme o backend.
-- As variáveis de ambiente do backend devem estar corretamente configuradas no arquivo `.env`.
+```powershell
+cd notification-system-frontend
+npm install
+ng serve
+```
+O frontend estará em: http://localhost:4200
+
+---
+
+## Ordem Recomendada
+1. Suba o RabbitMQ (Docker)
+2. Inicie o backend
+3. Inicie o frontend
+
+---
+
+## Dicas
+- O backend precisa do RabbitMQ rodando para funcionar corretamente.
+- O frontend consome a API do backend, então ambos devem estar ativos.
+- Para testes, utilize as URLs locais informadas acima.
